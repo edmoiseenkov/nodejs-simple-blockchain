@@ -18,7 +18,7 @@ let newBlock = {
 
 let blocks = {};
 
-let lastHash = '';
+let lastHash = 0;
 
 app.post('/add_data', (req, res) => {
 	newBlock.rows.push(req.body.data.toString());
@@ -51,12 +51,12 @@ app.get('/last_blocks/:count', (req, res) => {
 	let result = [];
 
 	for (let i = 0, _hash = lastHash; i < count; i++) {
-		result.push(blocks[_hash]);
-		_hash = result[result.length - 1].previous_block_hash;
-
 		if (_hash === 0) {
 			break;
 		}
+
+		result.push(blocks[_hash]);
+		_hash = result[result.length - 1].previous_block_hash;
 	}
 
 	res.setHeader('Content-Type', 'application/json');
