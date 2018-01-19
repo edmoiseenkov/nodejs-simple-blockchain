@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Blockchain</title>
+</head>
+<body>
+
+<h1>Blockchain</h1>
+
+<i>Open DevTools / Console</i>
+
+<form id="addForm">
+	<h4>Add data</h4>
+	<input id="dataInput" type="text" placeholder="Data">
+	<button type="submit">Send</button>
+</form>
+
+<form id="lastBlocksForm">
+	<h4>Get last blocks</h4>
+	<input id="countInput" type="number" placeholder="Count">
+	<button type="submit">Get</button>
+</form>
+
+<script>
+	var addFormEl = document.getElementById('addForm'),
+		dataInputEl = document.getElementById('dataInput'),
+
+		lastBlocksFormEl = document.getElementById('lastBlocksForm'),
+		countInputEl = document.getElementById('countInput'),
+
+		options = {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json, text/plain, */*',
+				'Content-Type': 'application/json'
+			},
+		};
+
+
+	function onSuccessResponse(response) {
+		return response.json();
+	}
+
+	function onSuccessAddData(blockchain) {
+		console.log('blockchain:', blockchain);
+	}
+
+	function onSuccessGettingLastBlocks(lastBlocks) {
+		console.log('last blocks:', lastBlocks);
+	}
+
+	addFormEl.onsubmit = function (e) {
+		e.preventDefault();
+
+		options.body = JSON.stringify({ data: dataInputEl.value });
+
+		fetch('/add_data', options)
+			.then(onSuccessResponse)
+			.then(onSuccessAddData);
+
+		dataInputEl.value = '';
+	};
+
+	lastBlocksFormEl.onsubmit = function (e) {
+		e.preventDefault();
+
+		fetch('/last_blocks/' + (+countInputEl.value))
+			.then(onSuccessResponse)
+			.then(onSuccessGettingLastBlocks);
+	};
+
+</script>
+
+</body>
+</html>

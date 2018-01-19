@@ -1,0 +1,14 @@
+{
+  "name": "block-chain",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Eduard Moiseenkov",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.14.11"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "sha256": "^0.2.0"
+  }
+}
